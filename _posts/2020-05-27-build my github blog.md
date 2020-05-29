@@ -1,9 +1,9 @@
 ---
 layout:     post
-title:      "Welcome to QuanQinle Blog"
+title:      "Welcome to Peter Quan Blog"
 subtitle:   "build my github blog"
 date:       2020-05-27 12:00:00
-author:     "QuanQinle"
+author:     "Peter Quan"
 header-img: "img/post-bg-2015.jpg"
 tags:
     - 生活
@@ -21,8 +21,8 @@ blog模板试用Hux的，现在原模板中的很多东西还没删，先简单�
 
 【进阶版】有道云笔记Markdown指南 http://note.youdao.com/iyoudao/?p=2445
 
-有道图表绘制^[我是一个注解]讲解：
-http://knsv.github.io/mermaid/
+有道md的底层^[我是一个注解]依赖讲解：
+https://github.com/mermaid-js/mermaid
 
 
 <kbd>Ctrl</kbd> + <kbd>T</kbd> : New tab dialog (maybe you want to open cmd as admin?)

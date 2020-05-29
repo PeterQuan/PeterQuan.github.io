@@ -1,14 +1,14 @@
 {
-    "name": "quanqinle-blog",
-    "title": "QuanQinle Blog",
-    "author": "quanqinle <quanqinle@gmail.com>",
+    "name": "peterquan-blog",
+    "title": "PeterQuan Blog",
+    "author": "Peter Quan <quanqinle@gmail.com>",
     "version": "1.8.2",
     "homepage": "http://quanqinle.github.io",
     "repository": {
         "type": "git",
-        "url": "https://github.com/quanqinle/quanqinle.github.io"
+        "url": "https://github.com/PeterQuan/PeterQuan.github.io"
     },
-    "bugs": "https://github.com/quanqinle/quanqinle.github.io/issues",
+    "bugs": "https://github.com/PeterQuan/PeterQuan.github.io/issues",
     "devDependencies": {
         "grunt": "^1.1.0",
         "grunt-banner": "~0.2.3",
