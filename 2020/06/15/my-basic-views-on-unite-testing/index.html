@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>我对自动化测试的基本观点 | Quan Qinle</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="[toc] 什么是自动化测试？不想说话 为什么要进行自动化测试？自动化测试的好处不想说话 自动化测试的类型常规分类通常我们听到最多的分类方式是：  单元测试 unit testing 接口测试 API testing 界面测试 user interface testing  这个分类法很合理，也容易理解，唯一的问题是在实际实施的时候，所写的有些用例很难区分是单元测试还是接口测试。 按大小分类下面是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我对自动化测试的基本观点">
+<meta property="og:url" content="https://peterquan.github.io/2020/06/15/my-basic-views-on-unite-testing/index.html">
+<meta property="og:site_name" content="Quan Qinle">
+<meta property="og:description" content="[toc] 什么是自动化测试？不想说话 为什么要进行自动化测试？自动化测试的好处不想说话 自动化测试的类型常规分类通常我们听到最多的分类方式是：  单元测试 unit testing 接口测试 API testing 界面测试 user interface testing  这个分类法很合理，也容易理解，唯一的问题是在实际实施的时候，所写的有些用例很难区分是单元测试还是接口测试。 按大小分类下面是">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-06-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-06-20T02:48:08.381Z">
+<meta property="article:author" content="权芹乐">
+<meta property="article:tag" content="自动化测试">
+<meta property="article:tag" content="Automated Testing">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Quan Qinle" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Quan Qinle</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">权芹乐的博客 | QuanQinle&#39;s Blog</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://peterquan.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-my-basic-views-on-unite-testing" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/06/15/my-basic-views-on-unite-testing/" class="article-date">
+  <time datetime="2020-06-14T16:00:00.000Z" itemprop="datePublished">2020-06-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      我对自动化测试的基本观点
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>[toc]</p>
+<h1 id="什么是自动化测试？"><a href="#什么是自动化测试？" class="headerlink" title="什么是自动化测试？"></a>什么是自动化测试？</h1><p>不想说话</p>
+<h1 id="为什么要进行自动化测试？自动化测试的好处"><a href="#为什么要进行自动化测试？自动化测试的好处" class="headerlink" title="为什么要进行自动化测试？自动化测试的好处"></a>为什么要进行自动化测试？自动化测试的好处</h1><p>不想说话</p>
+<h1 id="自动化测试的类型"><a href="#自动化测试的类型" class="headerlink" title="自动化测试的类型"></a>自动化测试的类型</h1><h2 id="常规分类"><a href="#常规分类" class="headerlink" title="常规分类"></a>常规分类</h2><p>通常我们听到最多的分类方式是：</p>
+<ul>
+<li>单元测试 unit testing</li>
+<li>接口测试 API testing</li>
+<li>界面测试 user interface testing</li>
+</ul>
+<p>这个分类法很合理，也容易理解，唯一的问题是在实际实施的时候，所写的有些用例很难区分是单元测试还是接口测试。</p>
+<h2 id="按大小分类"><a href="#按大小分类" class="headerlink" title="按大小分类"></a>按大小分类</h2><p>下面是 <a href="https://cloud.tencent.com/developer/article/1490961" target="_blank" rel="noopener">腾讯新闻产品组提出的分类方式</a>，我认为具有很好的可操作性：</p>
+<ul>
+<li>小型测试，针对单个函数的测试，关注其内部逻辑，mock所有需要的服务。小型测试带来优秀的代码质量、良好的异常处理、优雅的错误报告</li>
+<li>中型测试，验证两个或多个制定的模块应用之间的交互</li>
+<li>大型测试，也被称为“系统测试”或“端到端测试”。大型测试在一个较高层次上运行，验证系统作为一个整体是如何工作的。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>资源</th>
+<th>小型测试</th>
+<th>中型测试</th>
+<th>大型测试</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>网络访问</td>
+<td>否</td>
+<td>仅访问localhost</td>
+<td>是</td>
+</tr>
+<tr>
+<td>数据库访问</td>
+<td>否</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>访问文件</td>
+<td>否</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>访问用户界面</td>
+<td>否</td>
+<td>否</td>
+<td>是</td>
+</tr>
+<tr>
+<td>使用外部服务</td>
+<td>否</td>
+<td>不鼓励，可mock</td>
+<td>是</td>
+</tr>
+<tr>
+<td>多线程</td>
+<td>否</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>使用sleep语句</td>
+<td>否</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>使用系统属性设置</td>
+<td>否</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>运行时间限制（毫秒）</td>
+<td>60</td>
+<td>300</td>
+<td>900+</td>
+</tr>
+<tr>
+<td>强制时间限制（分钟）</td>
+<td>1</td>
+<td>5</td>
+<td>15</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>-</th>
+<th>小型测试</th>
+<th>中型测试</th>
+<th>大型测试</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>对应测试类型</td>
+<td>单元测试</td>
+<td>单元测试+逻辑层测试（泛单元或分层测试）</td>
+<td>UI测试或接口测试</td>
+</tr>
+</tbody></table>
+<h1 id="我的做法"><a href="#我的做法" class="headerlink" title="我的做法"></a>我的做法</h1><ul>
+<li>遵守“金字塔”理论，UI层用例做薄，UT用例做厚</li>
+<li>MVC后端项目分层测试，每层的用例对其下层调用时尽量打桩，即，mock它的下层、mock它所调用的函数，达到隔离所测类、实现只测当前类方法的目的</li>
+<li>单元测试尽量不依赖数据库、外部服务、网络等等</li>
+<li>以上3条只是尽量做到，视实际情况允许存在特例</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://peterquan.github.io/2020/06/15/my-basic-views-on-unite-testing/" data-id="ckbnu5yd0000534l5ckzj8w79" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Automated-Testing/" rel="tag">Automated Testing</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/" rel="tag">自动化测试</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/06/12/use-junit5-in-lower-version-of-springboot/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Junit | 在Spring Boot2低版本中使用Junit 5</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Automated-Testing/" rel="tag">Automated Testing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDN/" rel="tag">CDN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DNS/" rel="tag">DNS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Junit/" rel="tag">Junit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Selenium/" rel="tag">Selenium</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Spring-Boot/" rel="tag">Spring Boot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unit-Testing/" rel="tag">Unit Testing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" rel="tag">单元测试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%9F%E5%90%8D/" rel="tag">域名</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95/" rel="tag">接口测试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%88%AC%E8%99%AB/" rel="tag">爬虫</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BD%91%E9%A1%B5%E6%8A%93%E5%8F%96/" rel="tag">网页抓取</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/" rel="tag">自动化测试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Automated-Testing/" style="font-size: 10px;">Automated Testing</a> <a href="/tags/CDN/" style="font-size: 10px;">CDN</a> <a href="/tags/DNS/" style="font-size: 10px;">DNS</a> <a href="/tags/Junit/" style="font-size: 10px;">Junit</a> <a href="/tags/Selenium/" style="font-size: 15px;">Selenium</a> <a href="/tags/Spring-Boot/" style="font-size: 10px;">Spring Boot</a> <a href="/tags/Unit-Testing/" style="font-size: 10px;">Unit Testing</a> <a href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" style="font-size: 10px;">单元测试</a> <a href="/tags/%E5%9F%9F%E5%90%8D/" style="font-size: 10px;">域名</a> <a href="/tags/%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95/" style="font-size: 10px;">接口测试</a> <a href="/tags/%E7%88%AC%E8%99%AB/" style="font-size: 10px;">爬虫</a> <a href="/tags/%E7%BD%91%E9%A1%B5%E6%8A%93%E5%8F%96/" style="font-size: 10px;">网页抓取</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/" style="font-size: 20px;">自动化测试</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2000/01/">一月 2000</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/06/15/my-basic-views-on-unite-testing/">我对自动化测试的基本观点</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/12/use-junit5-in-lower-version-of-springboot/">Junit | 在Spring Boot2低版本中使用Junit 5</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/11/register-domain/">在porkbun注册域名</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/06/Bypass-login-verification-with-cookies/">Selenium | 自动登录脚本如何绕过二维码、校验码等安全校验</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/04/How-to-handle-LazyLoad-page-when-use-Selenium/">Selenium | 编写爬虫抓取网页图片遭遇懒加载</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 权芹乐<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
