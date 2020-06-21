@@ -5,7 +5,7 @@
 # Site
 title: Quan Qinle
 subtitle: 权芹乐的博客 | QuanQinle's Blog
-description: '时间需要留下走过的痕迹。'
+description: '时间需要留下走过的痕迹'
 keywords: 编程, 测试, 计算机, 人生
 author: 权芹乐
 language: zh-CN
@@ -100,7 +100,10 @@ theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
+## Detail: https://hexo.io/zh-cn/docs/one-command-deployment
+## 当执行`hexo deploy`时，Hexo会将public目录中的文件和目录推送至如下的远端仓库和分支中，并且完全覆盖该分支下的已有内容。
+## 所以，执行该指令可以替代“借助Travis CI部署将Hexo博客部署到GitHub Pages上”的方式。
 deploy:
   type: git
   repo: https://github.com/PeterQuan/PeterQuan.github.io
-  branch: hexo
+  branch: master
