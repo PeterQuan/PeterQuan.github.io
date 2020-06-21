@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.webp">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.webp">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"peterquan.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="做Web UI自动化测试的朋友，基本上都会遇到用户登录操作，然而基于安全性考虑，登录过程除了要求输入用户名和密码，往往还会存在为了防止自动化登陆而设置的更加复杂的校验。比如， 既然这些校验的存在就是为了对抗robot、防止自动化登陆，那么，它们自然就成了自动化登陆所面临的难题了。如果知道了这一点，你仍去试着用Selenium或其他技术进行破解，那么，在这样做之前，建议你先掂量掂量自己的技术实力吧。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Selenium | 自动登录脚本如何绕过二维码、校验码等安全校验">
+<meta property="og:url" content="https://peterquan.github.io/2020/06/06/Bypass-login-verification-with-cookies/index.html">
+<meta property="og:site_name" content="Quan Qinle">
+<meta property="og:description" content="做Web UI自动化测试的朋友，基本上都会遇到用户登录操作，然而基于安全性考虑，登录过程除了要求输入用户名和密码，往往还会存在为了防止自动化登陆而设置的更加复杂的校验。比如， 既然这些校验的存在就是为了对抗robot、防止自动化登陆，那么，它们自然就成了自动化登陆所面临的难题了。如果知道了这一点，你仍去试着用Selenium或其他技术进行破解，那么，在这样做之前，建议你先掂量掂量自己的技术实力吧。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://peterquan.github.io/img/in-post/selenium-login-cookie/01.webp">
+<meta property="og:image" content="https://peterquan.github.io/img/in-post/selenium-login-cookie/02.webp">
+<meta property="og:image" content="https://peterquan.github.io/img/in-post/selenium-login-cookie/03.webp">
+<meta property="og:image" content="https://peterquan.github.io/img/in-post/selenium-login-cookie/04.webp">
+<meta property="og:image" content="https://peterquan.github.io/img/in-post/selenium-login-cookie/06.webp">
+<meta property="article:published_time" content="2020-06-06T00:08:08.000Z">
+<meta property="article:modified_time" content="2020-06-09T01:09:09.000Z">
+<meta property="article:author" content="权芹乐">
+<meta property="article:tag" content="Selenium">
+<meta property="article:tag" content="自动化测试">
+<meta property="article:tag" content="接口测试">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://peterquan.github.io/img/in-post/selenium-login-cookie/01.webp">
+
+<link rel="canonical" href="https://peterquan.github.io/2020/06/06/Bypass-login-verification-with-cookies/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Selenium | 自动登录脚本如何绕过二维码、校验码等安全校验 | Quan Qinle</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Quan Qinle</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">权芹乐的博客 | QuanQinle's Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://peterquan.github.io/2020/06/06/Bypass-login-verification-with-cookies/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.webp">
+      <meta itemprop="name" content="权芹乐">
+      <meta itemprop="description" content="时间需要留下走过的痕迹">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Quan Qinle">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Selenium | 自动登录脚本如何绕过二维码、校验码等安全校验
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-06 08:08:08" itemprop="dateCreated datePublished" datetime="2020-06-06T08:08:08+08:00">2020-06-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-09 09:09:09" itemprop="dateModified" datetime="2020-06-09T09:09:09+08:00">2020-06-09</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>做Web UI自动化测试的朋友，基本上都会遇到用户登录操作，然而基于安全性考虑，登录过程除了要求输入用户名和密码，往往还会存在为了防止自动化登陆而设置的更加复杂的校验。比如，<br><img src="/img/in-post/selenium-login-cookie/01.webp" alt="imag"></p>
+<p>既然这些校验的存在就是为了对抗robot、防止自动化登陆，那么，它们自然就成了自动化登陆所面临的难题了。如果知道了这一点，你仍去试着用Selenium或其他技术进行破解，那么，在这样做之前，建议你先掂量掂量自己的技术实力吧。</p>
+<h1 id="我们自己项目中的安全校验"><a href="#我们自己项目中的安全校验" class="headerlink" title="我们自己项目中的安全校验"></a>我们自己项目中的安全校验</h1><p>如果这种校验出现在我们自己的测试项目中，正如我在视频《Web UI自动化测试：Selenium入门》中所说，建议你和研发人员沟通，<strong>在test版本上去除它们，只保留用户和密码即可</strong>。</p>
+<p>解决问题的方法有很多，换一种思路，一切豁然开朗。把“登录过程中二维码/短信验证”<strong>从自动化测试用例集中移出，放到手工测试用例集</strong>，技术难题就这么轻松愉快的解决了，码农再也不用为了苦思冥想、挠头掉发担心了。</p>
+<p>各位看客，山不过来我就过去~~</p>
+<h1 id="第三方网站中的安全校验"><a href="#第三方网站中的安全校验" class="headerlink" title="第三方网站中的安全校验"></a>第三方网站中的安全校验</h1><p>可是……如果你是在对第三方网站编写网页爬虫，或者编写一些自动化脚本，遇到防自动化登录校验，又该怎么办呢？现在可没有网站程序员帮你临时去掉这个功能模块了。</p>
+<p>这种情况，正是本文需要讲解的内容。</p>
+<h1 id="半自动化方案"><a href="#半自动化方案" class="headerlink" title="半自动化方案"></a>半自动化方案</h1><p>我的解决方案是这样的：</p>
+<ol>
+<li>人工登录所需网站。</li>
+<li>提取页面请求头中的Cookie。</li>
+<li>将Cookie添加到WebDriver。</li>
+</ol>
+<p>前两步很简单，应该是从业人员的基本功，不过多赘述，但下文也会演示。重点在第3步，我不确定Selenium是否提供了这样的API，幸运的是，最终在官方docs中找到所需的方法。</p>
+<p>也许你已经发现了，经过这个方案的处理，我们的自动化变得不纯粹了，它变成了半自动化，因为获取请求Cookie的过程是人工的。Anyway，我的自动化脚本至少又可以运行起来了，加入一点点人工介入也是值得的。</p>
+<p>另外一点不方便的是，Cookie中的登录信息都是有有效期的，无论这个网站登录时效使用的是Cookie还是Session，我们不可避免的都需要每隔一段时间重新手工登录网站，获取最新的Cookie，并在我们的代码中进行替换。</p>
+<h1 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h1><p>下面我们以头条公众号后台为例演示整个过程。</p>
+<h2 id="1、人工登录所需网站"><a href="#1、人工登录所需网站" class="headerlink" title="1、人工登录所需网站"></a>1、人工登录所需网站</h2><p>这一步就不演示了，可别泄露了我的密码。<br><img src="/img/in-post/selenium-login-cookie/02.webp" alt="imag"></p>
+<h2 id="2、提取页面请求头中的Cookie"><a href="#2、提取页面请求头中的Cookie" class="headerlink" title="2、提取页面请求头中的Cookie"></a>2、提取页面请求头中的Cookie</h2><p>操作步骤：</p>
+<ol>
+<li>点击<kbd>F12</kbd>，打开“开发者工具”</li>
+<li>刷新页面，捕获请求</li>
+<li>在左侧请求列表中切换几次，找到<code>Request Headers</code>中<code>Cookie</code>有值的请求</li>
+<li>Cookie字段后面的一长串字符串，就是我们需要的<br><img src="/img/in-post/selenium-login-cookie/03.webp" alt="imag"></li>
+</ol>
+<h2 id="3、将Cookie添加到WebDriver"><a href="#3、将Cookie添加到WebDriver" class="headerlink" title="3、将Cookie添加到WebDriver"></a>3、将Cookie添加到WebDriver</h2><p>上一步中得到的Cookie字符串还需要经过处理，因为它是很多Cookie以分号为分隔符拼接之后的内容，我们需要逆向操作：</p>
+<ol>
+<li>先以“分号<code>;</code>”为分隔符获取Cookie列表，</li>
+<li>列表中的元素都含有=号，=左侧是Cookie的name，=右侧是Cookie的value，用name和value构造Cookie，</li>
+<li>最后传给WebDriver。</li>
+</ol>
+<p>为了验证我们分析的 <strong>“Cookie字符串是以分号分隔、Cookie的name和value在=两侧”</strong>，我们仍回到“开发者工具”，切换到Cookies卡片下，查看Cookie列表完整信息：</p>
+<p><img src="/img/in-post/selenium-login-cookie/04.webp" alt="imag"></p>
+<h1 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h1><p>闲话少叙，我们开始编码吧。</p>
+<p>先解析我们得到的原始Cookie字符串，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.openqa.selenium.Cookie;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 将cookie字符串拆解到list中</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> rawCookie 原始Cookie字符串</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> Cookie列表</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Cookie&gt; <span class="title">parseRawCookie</span><span class="params">(String rawCookie)</span> </span>&#123;</span><br><span class="line">  List&lt;Cookie&gt; cookies = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">  String[] rawCookieParams = rawCookie.split(<span class="string">";"</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (String cookieParam : rawCookieParams) &#123;</span><br><span class="line">    String[] rawCookieNameAndValue = cookieParam.split(<span class="string">"="</span>);</span><br><span class="line">    <span class="keyword">if</span> (<span class="number">2</span> != rawCookieNameAndValue.length) &#123;</span><br><span class="line">      log.error(<span class="string">"Invalid cookie: missing name and value."</span>);</span><br><span class="line">      <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    String cookieName = rawCookieNameAndValue[<span class="number">0</span>].trim();</span><br><span class="line">    String cookieValue = rawCookieNameAndValue[<span class="number">1</span>].trim();</span><br><span class="line">    Cookie cookie = <span class="keyword">new</span> Cookie(cookieName, cookieValue);</span><br><span class="line">    cookies.add(cookie);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> cookies;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将上一步得到的Cookie列表添加给WebDriver，这一步需要放在所有需要权限验证的步骤之前。<br>我们可以先添加Cookie，然后刷新页面，这样我们打开的网页就是登陆状态了。<br><img src="/img/in-post/selenium-login-cookie/06.webp" alt="imag"></p>
+<p>编码演示到这里就够用了，大家不妨试试。</p>
+<h1 id="API补充说明"><a href="#API补充说明" class="headerlink" title="API补充说明"></a>API补充说明</h1><p>在这个解决方案中，我们主要用到了两个接口，它们还有一些相关接口，如有需要，请自行查阅。</p>
+<h2 id="1、添加Cookie"><a href="#1、添加Cookie" class="headerlink" title="1、添加Cookie"></a>1、添加Cookie</h2><p><code>void addCookie(Cookie cookie) // Add a specific cookie.</code></p>
+<ul>
+<li>所属接口：<br><code>org.openqa.selenium.WebDriver.Options</code></li>
+<li>相关方法：<br><code>java.util.Set&lt;Cookie&gt; getCookies()</code>、<code>deleteCookie(Cookie cookie)</code> 等等。</li>
+</ul>
+<h2 id="2、构造Cookie"><a href="#2、构造Cookie" class="headerlink" title="2、构造Cookie"></a>2、构造Cookie</h2><p><code>Cookie(java.lang.String name, java.lang.String value)</code></p>
+<ul>
+<li>所属接口：<br><code>org.openqa.selenium.Cookie</code></li>
+<li>相关方法：<br><code>Cookie(java.lang.String name, java.lang.String value, java.lang.String domain, java.lang.String path, java.util.Date expiry, boolean isSecure, boolean isHttpOnly)</code> 等等</li>
+</ul>
+<p>官方docs地址，如下：<br><a href="https://seleniumhq.github.io/selenium/docs/api/java/" target="_blank" rel="noopener">https://seleniumhq.github.io/selenium/docs/api/java/</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/quanqinle">
+            <span class="icon">
+              <i class="fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://t.me/quanqinle">
+            <span class="icon">
+              <i class="fab fa-telegram"></i>
+            </span>
+
+            <span class="label">Telegram</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Selenium/" rel="tag"># Selenium</a>
+              <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/" rel="tag"># 自动化测试</a>
+              <a href="/tags/%E6%8E%A5%E5%8F%A3%E6%B5%8B%E8%AF%95/" rel="tag"># 接口测试</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/06/04/How-to-handle-LazyLoad-page-when-use-Selenium/" rel="prev" title="Selenium | 编写爬虫抓取网页图片遭遇懒加载">
+      <i class="fa fa-chevron-left"></i> Selenium | 编写爬虫抓取网页图片遭遇懒加载
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/06/10/register-domain/" rel="next" title="在porkbun注册域名">
+      在porkbun注册域名 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#我们自己项目中的安全校验"><span class="nav-number">1.</span> <span class="nav-text">我们自己项目中的安全校验</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三方网站中的安全校验"><span class="nav-number">2.</span> <span class="nav-text">第三方网站中的安全校验</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#半自动化方案"><span class="nav-number">3.</span> <span class="nav-text">半自动化方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#演示"><span class="nav-number">4.</span> <span class="nav-text">演示</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、人工登录所需网站"><span class="nav-number">4.1.</span> <span class="nav-text">1、人工登录所需网站</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、提取页面请求头中的Cookie"><span class="nav-number">4.2.</span> <span class="nav-text">2、提取页面请求头中的Cookie</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、将Cookie添加到WebDriver"><span class="nav-number">4.3.</span> <span class="nav-text">3、将Cookie添加到WebDriver</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编码"><span class="nav-number">5.</span> <span class="nav-text">编码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#API补充说明"><span class="nav-number">6.</span> <span class="nav-text">API补充说明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、添加Cookie"><span class="nav-number">6.1.</span> <span class="nav-text">1、添加Cookie</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、构造Cookie"><span class="nav-number">6.2.</span> <span class="nav-text">2、构造Cookie</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="权芹乐"
+      src="/images/avatar.webp">
+  <p class="site-author-name" itemprop="name">权芹乐</p>
+  <div class="site-description" itemprop="description">时间需要留下走过的痕迹</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">权芹乐</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
