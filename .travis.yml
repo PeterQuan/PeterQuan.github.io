@@ -3,14 +3,10 @@ language: node_js
 node_js:
   - stable # use nodejs v10 LTS
 
-env:
- global:
-   - BLOG_SOURCE: hexo # blog source store in this branch
-
 cache: npm
 branches:
   only:
-    - $BLOG_SOURCE # store source code of hexo in hexo-source branch
+    - hexo # store source code of hexo blog in hexo branch
 script:
   - hexo generate # generate static files
 deploy:
@@ -20,7 +16,7 @@ deploy:
   keep-history: true
   target_branch: master # generate static files to master
   on:
-    branch: $BLOG_SOURCE
+    branch: hexo
   local-dir: public
 
 # configure notifications (email, IRC, campfire etc)
