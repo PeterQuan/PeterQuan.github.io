@@ -1,0 +1,23 @@
+sudo: false
+language: node_js
+node_js:
+  - stable # use nodejs v10 LTS
+cache: npm
+branches:
+  only:
+    - ${BLOG_SOURCE} # store source code of hexo in hexo-source branch
+script:
+  - hexo generate # generate static files
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GH_TOKEN
+  keep-history: true
+  target_branch: master # generate static files to master
+  on:
+    branch: ${BLOG_SOURCE}
+  local-dir: public
+
+env:
+ global:
+   - BLOG_SOURCE: hexo # blog source store in this branch
