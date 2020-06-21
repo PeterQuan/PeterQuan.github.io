@@ -10,7 +10,7 @@ env:
 cache: npm
 branches:
   only:
-    - hexo # store source code of hexo in hexo-source branch
+    - $BLOG_SOURCE # store source code of hexo in hexo-source branch
 script:
   - hexo generate # generate static files
 deploy:
@@ -20,7 +20,7 @@ deploy:
   keep-history: true
   target_branch: master # generate static files to master
   on:
-    branch: hexo
+    branch: $BLOG_SOURCE
   local-dir: public
 
 # configure notifications (email, IRC, campfire etc)
