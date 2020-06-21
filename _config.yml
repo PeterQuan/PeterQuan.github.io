@@ -5,7 +5,7 @@
 # Site
 title: Quan Qinle
 subtitle: 权芹乐的博客 | QuanQinle's Blog
-description: '这里是 权芹乐 的个人博客。时间需要留下走过的痕迹。'
+description: '时间需要留下走过的痕迹。'
 keywords: 编程, 测试, 计算机, 人生
 author: 权芹乐
 language: zh-CN
@@ -96,7 +96,7 @@ ignore:
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 ## default -> theme: landscape
-theme: next
+theme: landscape
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
