@@ -232,7 +232,7 @@ chat:
 # ---------------------------------------------------------------
 
 # Automatically excerpt description in homepage as preamble text.
-excerpt_description: false
+excerpt_description: true
 
 # @FIXME: I add this following section temporarily. by QUANQL
 # Automatically excerpt (Not recommend). 
