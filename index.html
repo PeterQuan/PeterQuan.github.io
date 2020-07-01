@@ -152,6 +152,112 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://peterquan.github.io/2020/06/29/CSS-Selector-summary/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.webp">
+      <meta itemprop="name" content="权芹乐">
+      <meta itemprop="description" content="时间需要留下走过的痕迹">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Quan Qinle">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/29/CSS-Selector-summary/" class="post-title-link" itemprop="url">Selenium元素定位By.cssSelector()</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-30 00:00:00" itemprop="dateCreated datePublished" datetime="2020-06-30T00:00:00+08:00">2020-06-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-01 16:39:07" itemprop="dateModified" datetime="2020-07-01T16:39:07+08:00">2020-07-01</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>[toc]</p>
+<p>[toc]</p>
+<p>CSS Selector 使用CSS定位元素</p>
+<h1 id="CSS-Selector是什么？"><a href="#CSS-Selector是什么？" class="headerlink" title="CSS Selector是什么？"></a><code>CSS Selector</code>是什么？</h1><blockquote>
+<p>[MDN web docs]</p>
+<p>CSS selectors define the elements to which a set of CSS rules apply.</p>
+</blockquote>
+<blockquote>
+<p>[w3schools]</p>
+<p>In CSS, selectors are patterns used to select the element(s) you want to style.</p>
+</blockquote>
+<h1 id="CSS-Selector语法"><a href="#CSS-Selector语法" class="headerlink" title="CSS Selector语法"></a>CSS Selector语法</h1><h2 id="4个基础选择器"><a href="#4个基础选择器" class="headerlink" title="4个基础选择器"></a>4个基础选择器</h2><p>个人认为，<code>CSS Selector</code>最重要的选择器只有下面4个，分别是 tagname标签名称，标签id属性，class属性，以及其他属性：</p>
+<ul>
+<li>tag</li>
+<li>#id</li>
+<li>.class</li>
+<li>[attribute=value]</li>
+</ul>
+<p>这4个的各种组合，可以出现丰富、强大的效果。</p>
+<p>举几个例子</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">tag</span><span class="selector-id">#id</span></span><br><span class="line"><span class="selector-tag">tag</span><span class="selector-class">.class</span></span><br><span class="line">tag.class1.class2   // 多个class</span><br><span class="line"><span class="selector-tag">tag</span><span class="selector-attr">[attributeName=<span class="string">'attributeValue'</span>]</span></span><br><span class="line">tag[attributeName='attributeValue'][attributeName2='attributeValue2'] // 多个属性</span><br><span class="line">tag#id.class[attributeName='attributeValue'] // 4个选择器</span><br></pre></td></tr></table></figure>
+
+<h2 id="更多选择器"><a href="#更多选择器" class="headerlink" title="更多选择器"></a>更多选择器</h2><p>下面再列几个我常用的选择器。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*-- 属性的模糊匹配 --*/</span></span><br><span class="line">// ^ - Starts with</span><br><span class="line"><span class="selector-attr">[attribute^=<span class="string">'attributeValue'</span>]</span></span><br><span class="line">// $ - Ends with</span><br><span class="line"><span class="selector-attr">[attribute$=<span class="string">'attributeValue'</span>]</span></span><br><span class="line">// * - Contains</span><br><span class="line"><span class="selector-attr">[attribute*=<span class="string">'attributeValue'</span>]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*-- 父子节点 --*/</span></span><br><span class="line">// 直接子节点，多个（parentLocator&gt;childLocator）。XPath: //div/a</span><br><span class="line"><span class="selector-tag">div</span><span class="selector-id">#buttonDiv</span>&gt;<span class="selector-tag">button</span></span><br><span class="line">// 相对子节点，多个（locator1 locator2）。XPath: //div//a</span><br><span class="line"><span class="selector-tag">div</span><span class="selector-id">#buttonDiv</span> <span class="selector-tag">button</span></span><br><span class="line">// 同一父节点下的第n个子元素，从1开始（:nth-child(n)）。下例，若li不是其父的第2位节点，则失败；数位子时，所有类型一起数</span><br><span class="line"><span class="selector-id">#testingTypes</span> <span class="selector-tag">li</span><span class="selector-pseudo">:nth-child(2)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*-- 兄弟节点 --*/</span></span><br><span class="line">// 紧邻的下一个节点，1个（locator1+locator2）</span><br><span class="line"><span class="selector-tag">li</span><span class="selector-id">#automation</span> + <span class="selector-tag">li</span></span><br><span class="line">// 其后的兄弟节点，可以被其他兄弟隔断（element1~element2）</span><br><span class="line"><span class="selector-tag">p</span>~<span class="selector-tag">ul</span></span><br></pre></td></tr></table></figure>
+
+<p>CSS Selector还有其他复杂的语法，但上面我们讲到的已经是精华，实用性最强。</p>
+<p>更多的见资料 [^1]</p>
+<h1 id="Selenium中的CSS-Selector"><a href="#Selenium中的CSS-Selector" class="headerlink" title="Selenium中的CSS Selector"></a><code>Selenium</code>中的<code>CSS Selector</code></h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">By by &#x3D; By.cssSelector(String selector);</span><br><span class="line">&#x2F;&#x2F;Find elements via the driver&#39;s underlying W3C Selector engine.</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">By.cssSelector(<span class="string">"button[id='stop']"</span>)  </span><br><span class="line">By.cssSelector(<span class="string">"button#stop"</span>)  </span><br><span class="line">By.cssSelector(<span class="string">"#stop"</span>)  </span><br><span class="line"></span><br><span class="line">By.cssSelector(<span class="string">"button.x-right-button"</span>)   </span><br><span class="line">By.cssSelector(<span class="string">".x-right-button"</span>) </span><br><span class="line"><span class="comment">// &lt;button class="x-btn-text module_picker_icon" /&gt; </span></span><br><span class="line">By.cssSelector(<span class="string">"button.x-btn-text.module_picker_icon"</span>)  <span class="comment">// 多个class</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//^=start with $=ends with *=contains</span></span><br><span class="line">By.cssSelector(<span class="string">"input[id^='Em']"</span>)</span><br><span class="line">By.cssSelector(<span class="string">"input[id$='wd']"</span>)</span><br><span class="line">By.cssSelector(<span class="string">"input[id*='ni']"</span>) <span class="comment">// 使用a[href*='.jpg']成功！</span></span><br><span class="line">By.cssSelector(<span class="string">"a:contains('Sign in')"</span>) </span><br><span class="line"><span class="comment">//contains试用失败！原因见下文invalid selector: An invalid or illegal selector was specified</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">By.cssSelector(<span class="string">"a[title=\"Go to Facebook home\"]"</span>)</span><br><span class="line">By.cssSelector(<span class="string">"input[id='signIn'][value='Sign in']"</span>) <span class="comment">// 多个属性</span></span><br><span class="line">By.cssSelector(<span class="string">"div#west-panel&gt;div:nth-child(1)&gt;div:nth-child(1)&gt;div:nth-child(2)&gt;div"</span>) </span><br><span class="line">By.cssSelector(<span class="string">"td.col5&gt;div&gt;input:nth-child(4)"</span>) <span class="comment">// nth-child(4) 表示查找第四个Pseudo-selements元素</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// XPATH: //input[@id='username']/following-sibling::input[1]</span></span><br><span class="line">By.cssSelector(<span class="string">".username + input"</span>)</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="不能通过部分文本contains定位元素"><a href="#不能通过部分文本contains定位元素" class="headerlink" title="不能通过部分文本contains定位元素"></a>不能通过部分文本<code>contains</code>定位元素</h1><p>有一点需要特别注意，不能使用 <code>a:contains(&#39;Sign in&#39;)</code>。</p>
+<p>原因：</p>
+<ol>
+<li><strong>Inner texts</strong><br>are the actual string patterns that the HTML label shows on the page.  </li>
+<li>(Not supported by WebDriver)<br>CSS: The CSS2 contains() function is not in CSS3; however, Selenium supports the superset of CSS1, 2, and 3.<br>contains() is not part of the current CSS3 specification so it will not work on all browsers, only ones that implemented it before it was pulled.</li>
+</ol>
+<p>遇到此种场景，可以使用<code>By by = By.ByXPath(String xpathExpression)</code>。<br>xpath见资料 [^2]</p>
+<h1 id="资料："><a href="#资料：" class="headerlink" title="资料："></a>资料：</h1><p>[^1]: CSS Selector详解：<a href="https://www.w3schools.com/cssref/css_selectors.asp" target="_blank" rel="noopener">https://www.w3schools.com/cssref/css_selectors.asp</a></p>
+<p>[^2]: CSS Selector与xpath语法比较：<a href="https://saucelabs.com/resources/articles/selenium-tips-css-selectors" target="_blank" rel="noopener">https://saucelabs.com/resources/articles/selenium-tips-css-selectors</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://peterquan.github.io/2020/06/14/my-basic-views-on-unite-testing/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -183,7 +289,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-23 16:56:39" itemprop="dateModified" datetime="2020-06-23T16:56:39+08:00">2020-06-23</time>
+                <time title="修改时间：2020-07-01 16:39:07" itemprop="dateModified" datetime="2020-07-01T16:39:07+08:00">2020-07-01</time>
               </span>
 
           
@@ -355,7 +461,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-23 16:56:39" itemprop="dateModified" datetime="2020-06-23T16:56:39+08:00">2020-06-23</time>
+                <time title="修改时间：2020-07-01 16:39:07" itemprop="dateModified" datetime="2020-07-01T16:39:07+08:00">2020-07-01</time>
               </span>
 
           
@@ -432,7 +538,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-23 16:56:39" itemprop="dateModified" datetime="2020-06-23T16:56:39+08:00">2020-06-23</time>
+                <time title="修改时间：2020-07-01 16:39:07" itemprop="dateModified" datetime="2020-07-01T16:39:07+08:00">2020-07-01</time>
               </span>
 
           
@@ -777,7 +883,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-23 16:56:39" itemprop="dateModified" datetime="2020-06-23T16:56:39+08:00">2020-06-23</time>
+                <time title="修改时间：2020-07-01 16:39:07" itemprop="dateModified" datetime="2020-07-01T16:39:07+08:00">2020-07-01</time>
               </span>
 
           
@@ -887,12 +993,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
