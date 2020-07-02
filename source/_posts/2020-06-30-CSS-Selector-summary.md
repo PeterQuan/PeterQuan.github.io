@@ -1,6 +1,6 @@
 ---
 layout:       post
-title:        "Selenium元素定位By.cssSelector()"
+title:        "Selenium | 元素定位By.cssSelector()"
 subtitle:     "CSS Selector最常用方法汇总"
 date:         2020-06-30
 author:       "权芹乐"
@@ -11,8 +11,6 @@ tags:
     - Selenium
     - 自动化测试
 ---
-
-[toc]
 
 [toc]
 
@@ -121,7 +119,7 @@ By.cssSelector(".username + input")
 ```
 
 
-# 不能通过部分文本`contains`定位元素
+# 不能通过文本`contains`定位元素的问题
 
 有一点需要特别注意，不能使用 `a:contains('Sign in')`。
 
@@ -135,7 +133,8 @@ contains() is not part of the current CSS3 specification so it will not work on 
 遇到此种场景，可以使用`By by = By.ByXPath(String xpathExpression)`。  
 xpath见资料 [^2]
 
-# 资料：
+
+# 资料
 
 [^1]: CSS Selector详解：https://www.w3schools.com/cssref/css_selectors.asp
 
