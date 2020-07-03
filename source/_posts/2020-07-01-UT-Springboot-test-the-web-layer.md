@@ -1,7 +1,7 @@
 ---
 layout:       post
 title:        "UT | Controller层单元测试"
-subtitle:     "Spring Boot 2.2.0开始支持Junit 5，之前的版本需要手动引入依赖"
+subtitle:     "几种常用的Controller层单元测试方法"
 date:         2020-07-01
 author:       "权芹乐"
 header-img:   "img/post-bg-beach2.webp"
@@ -33,7 +33,7 @@ Controller的单元测试很多时候都不容易做到隔离，不得不依赖�
 
 Start the application up and listen for a connection like it would do in production, and then send an HTTP request and assert the response.
 
-```Java
+```java
 import org.springframework.boot.test.web.client.TestRestTemplate;
 
 /**
@@ -68,7 +68,7 @@ Another useful approach is to not start the server at all, but test only the lay
 
 > 译：另一种有用的方法是根本不启动服务器，而是只测试下面的层，Spring在这一层处理传入的HTTP请求并将其传递给控制器。这样，几乎使用了整个堆栈，代码调用的方式与处理实际HTTP请求的方式完全相同，但是不需要启动服务器。
 
-```Java
+```java
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,7 +114,7 @@ In this test, the full Spring application context is started, but without the se
 > 译：在这个测试中，启动了完整的Spring应用程序上下文，但是没有服务器。我们可以使用`@WebMvcTest`将测试范围缩小到web层。
 如果应用含有多个controller，可以使用`@WebMvcTest(homecontroler.class)`来只实例化一个控制器。
 
-```Java
+```java
 @WebMvcTest(GreetingController.class)
 public class WebMockTest {
 
@@ -146,7 +146,7 @@ public class WebMockTest {
 
 与其他三个相比，方法4是比较合乎分层测试理念的方式。但在实际项目中，个人的体会，这种方式可操作性并不强。
 
-```Java
+```java
 public class MockitoControllerTest {
 
   @InjectMocks
@@ -188,7 +188,7 @@ The `@SpringBootTest` annotation tells Spring Boot to go and look for a main con
 
 它有两个属性：
 + webEnvironment：指定Web应用环境，它可以是以下值
-    - MOCK：提供一个模拟的 Servlet 环境，内置的 Servlet 容器没有启动，配合可以与@AutoConfigureMockMvc 结合使用，用于基于 MockMvc 的应用程序测试。
+    - MOCK：提供一个模拟的 Servlet 环境，内置的 Servlet 容器没有启动（不会对Servlet、Filter、Listener等进行初始化），配合可以与@AutoConfigureMockMvc 结合使用，用于基于 MockMvc 的应用程序测试。
     - RANDOM_PORT：加载一个 EmbeddedWebApplicationContext 并提供一个真正嵌入式的 Servlet 环境，随机端口。
     - DEFINED_PORT：加载一个 EmbeddedWebApplicationContext 并提供一个真正嵌入式的 Servlet 环境，默认端口 8080 或由配置文件指定。
     - NONE：使用 SpringApplication 加载 ApplicationContext，但不提供任何 servlet 环境。
