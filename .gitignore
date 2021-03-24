@@ -1,0 +1,22 @@
+# hexo-cli generate
+.DS_Store
+Thumbs.db
+db.json
+*.log
+node_modules/
+public/
+.deploy*/
+.deploy_git/
+package-lock.json
+
+# github page
+_site
+_posts/_draft
+node_modules
+.vscode
+*.log
+*.lock
+*.sh
+.jekyll-cache
+*/.DS_Store
+*/*/.DS_Store
