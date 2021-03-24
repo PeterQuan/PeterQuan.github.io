@@ -3,16 +3,15 @@ layout:       post
 title:        "UT | Controller层单元测试"
 subtitle:     "几种常用的Controller层单元测试方法"
 date:         2020-07-01
+updated:      2020-07-01
 author:       "权芹乐"
 header-img:   "img/post-bg-beach2.webp"
 catalog:      true
 tags:
     - Automated Testing
-    - 自动化测试
     - Junit
     - Spring Boot
     - Unit Testing
-    - 单元测试
 ---
 
 [toc]

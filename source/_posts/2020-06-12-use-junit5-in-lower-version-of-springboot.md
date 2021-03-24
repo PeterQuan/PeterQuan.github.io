@@ -3,6 +3,7 @@ layout:       post
 title:        "Junit | 在Spring Boot2低版本中使用Junit 5"
 subtitle:     "Spring Boot 2.2.0开始支持Junit 5，之前的版本需要手动引入依赖"
 date:         2020-06-12
+updated:      2020-06-12
 author:       "Quan Qinle"
 header-img:   "img/post-bg-beach1.webp"
 multilingual: false
@@ -11,7 +12,6 @@ tags:
     - Junit
     - Spring Boot
     - Unit Testing
-    - 单元测试
 ---
 
 先说结论：如果你用的`Spring Boot`版本是`2.2.0`或更新，那么，`spring-boot-starter-test`已自带`Junit 5`，本文对你无用，你可以直接在你的工程中编码了。

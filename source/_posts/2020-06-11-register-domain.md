@@ -3,11 +3,12 @@ layout:       post
 title:        "在porkbun注册域名"
 subtitle:     "注册域名，并使用cloudflare的免费CDN服务"
 date:         2020-06-11
+updated:      2020-06-11
 author:       "Quan Qinle"
 multilingual: false
 catalog:      true
 tags:
-    - 域名
+    - Domain
     - DNS
     - CDN
 ---

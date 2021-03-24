@@ -3,12 +3,12 @@ layout:       post
 title:        "我对自动化测试的基本观点"
 subtitle:     "自动测试应该怎么做？谈谈我的一点看法"
 date:         2020-06-15
+updated:      2020-06-15
 author:       "权芹乐"
 header-img:   "img/post-bg-beach2.webp"
 catalog:      true
 tags:
     - Automated Testing
-    - 自动化测试
 ---
 
 [toc]

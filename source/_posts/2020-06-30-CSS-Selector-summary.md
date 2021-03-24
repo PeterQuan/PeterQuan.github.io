@@ -3,13 +3,13 @@ layout:       post
 title:        "Selenium | 元素定位By.cssSelector()"
 subtitle:     "CSS Selector最常用方法汇总"
 date:         2020-06-30
+updated:      2020-06-30
 author:       "权芹乐"
 catalog:      true
 tags:
     - CSS Selector
     - Automated Testing
     - Selenium
-    - 自动化测试
 ---
 
 [toc]

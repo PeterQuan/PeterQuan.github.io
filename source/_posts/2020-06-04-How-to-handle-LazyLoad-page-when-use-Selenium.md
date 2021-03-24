@@ -10,9 +10,8 @@ multilingual: false
 catalog:      true
 tags:
     - Selenium
-    - 自动化测试
-    - 网页抓取
-    - 爬虫
+    - Automated Testing
+    - Web Crawling
 ---
 
 > 缘起：

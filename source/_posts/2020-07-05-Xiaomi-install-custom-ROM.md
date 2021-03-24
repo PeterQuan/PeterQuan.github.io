@@ -3,6 +3,7 @@ layout:       post
 title:        "小米6刷机"
 subtitle:     "小米刷欧版miui"
 date:         2020-07-05
+updated:      2020-07-05
 author:       "权芹乐"
 catalog:      true
 tags:
