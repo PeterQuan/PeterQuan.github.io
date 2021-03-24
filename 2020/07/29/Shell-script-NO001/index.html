@@ -195,6 +195,8 @@
 <h2 id="备份文件夹多于5个的话，删除最老的那个文件夹"><a href="#备份文件夹多于5个的话，删除最老的那个文件夹" class="headerlink" title="备份文件夹多于5个的话，删除最老的那个文件夹"></a>备份文件夹多于5个的话，删除最老的那个文件夹</h2><p>假设：<code>/home/backup/</code>下会定时生成备份目录，为省空间，最多允许保存<code>5</code>份备份，如果超过则删除最老的一份。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"></span><br><span class="line">SAVED_NUM=5</span><br><span class="line">num=`ls -l /home/backup/ | grep <span class="string">'^d'</span> | wc -l`;</span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$num</span> -ge <span class="variable">$SAVED_NUM</span> ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line">    rmfolder=`ls -tr /home/backup/ | head -n1`</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"To be deleted: <span class="variable">$&#123;rmfolder&#125;</span>"</span></span><br><span class="line">    rm -rf <span class="string">"/home/backup/<span class="variable">$&#123;rmfolder&#125;</span>"</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
 
+<p><strong>讲解</strong><br>grep ‘^d’: 筛选出文件夹（因为文件夹属性信息是d开头）<br>wc -l    : 统计行数，即，统计有多少个文件夹<br>-ge      : 大于等于<br>ls -tr   : 按从旧到新排序，旧的排在前面<br>head -n1 : 选取排列的第一个文件，1可以按需改成其他数值</p>
+
     </div>
 
     
@@ -246,7 +248,10 @@
     <a href="/2020/07/04/Xiaomi-install-custom-ROM/" rel="prev" title="小米6刷机">
       <i class="fa fa-chevron-left"></i> 小米6刷机
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/05/View-pod-log-in-K8S/" rel="next" title="k8s | 查看k8s中应用的运行log">
+      k8s | 查看k8s中应用的运行log <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -321,12 +326,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -353,7 +358,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
